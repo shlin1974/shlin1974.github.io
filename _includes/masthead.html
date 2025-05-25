@@ -6,17 +6,26 @@
       <nav id="site-nav" class="greedy-nav">
         <button><div class="navicon"></div></button>
         <ul class="visible-links">
-          <li class="masthead__menu-item masthead__menu-item--lg persist"><a href="{{ base_path }}/">{{ site.title }}</a></li>
+          <li class="masthead__menu-item masthead__menu-item--lg persist"><a href="{{ base_path }}/" data-i18n="site_title">{{ site.title }}</a></li>
           {% for link in site.data.navigation.main %}
             {% if link.url contains 'http' %}
               {% assign domain = '' %}
             {% else %}
               {% assign domain = base_path %}
             {% endif %}
-            <li class="masthead__menu-item"><a href="{{ domain }}{{ link.url }}">{{ link.title }}</a></li>
+            <li class="masthead__menu-item"><a href="{{ domain }}{{ link.url }}" data-i18n="menu_{{ link.title | downcase | replace: ' ', '_' }}">{{ link.title }}</a></li>
           {% endfor %}
-          <li id="theme-toggle" class="masthead__menu-item persist tail">
-            <a><i id="theme-icon" class="fa-solid fa-sun" aria-hidden="true" title="toggle theme"></i></a>
+          <li id="language-toggle" class="masthead__menu-item persist tail">
+            <a id="language-switch">
+              <i class="fa-solid fa-globe" aria-hidden="true"></i>
+              <span class="language-indicator">
+                {% if site.locale == 'zh-CN' %}
+                中
+                {% else %}
+                En
+                {% endif %}
+              </span>
+            </a>
           </li>
         </ul>
         <ul class="hidden-links hidden"></ul>
@@ -24,3 +33,14 @@
     </div>
   </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // 添加语言切换功能
+  document.getElementById('language-switch').addEventListener('click', function() {
+    var currentLang = getCurrentLanguage();
+    var newLang = currentLang === 'en' ? 'zh-CN' : 'en';
+    setLanguage(newLang);
+  });
+});
+</script>

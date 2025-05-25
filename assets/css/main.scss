@@ -8,36 +8,90 @@
    sorted by the dependencies. Also, the first two lines of the file are required by Jekyll.
  */
 
-@import
-    "vendor/breakpoint/breakpoint",
+@charset "utf-8";
 
-    "themes",
-    "theme/default",
-    "theme/dark",
+@import "vendor/breakpoint/breakpoint";
+@import "_themes";
+@import "theme/default";
+@import "theme/dark";
+@import "include/mixins";
+@import "vendor/susy/susy";
 
-    "include/mixins",
-    "vendor/susy/susy",
+@import "layout/reset";
+@import "layout/base";
 
-    "layout/reset",
-    "layout/base",
+@import "include/utilities";
+@import "layout/tables";
+@import "layout/buttons";
+@import "layout/notices";
+@import "layout/masthead";
+@import "layout/navigation";
+@import "layout/footer";
+@import "_syntax";
 
-    "include/utilities",
-    "layout/tables",
-    "layout/buttons",
-    "layout/notices",
-    "layout/masthead",
-    "layout/navigation",
-    "layout/footer",
-    "syntax",
+@import "layout/forms";
 
-    "layout/forms",
+@import "layout/page";
+@import "layout/archive";
+@import "layout/sidebar";
 
-    "layout/page",
-    "layout/archive",
-    "layout/sidebar",
+@import "vendor/font-awesome/fontawesome";
+@import "vendor/font-awesome/solid";
+@import "vendor/font-awesome/brands";
+@import "vendor/magnific-popup/magnific-popup";
 
-    "vendor/font-awesome/fontawesome",
-    "vendor/font-awesome/solid",
-    "vendor/font-awesome/brands",
-    "vendor/magnific-popup/magnific-popup"
-;
+/* Language Switcher Styles */
+#language-toggle {
+  cursor: pointer;
+}
+
+#language-switch {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: var(--global-masthead-link-color);
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+#language-switch i {
+  margin-right: 4px;
+}
+
+#language-switch:hover {
+  background-color: var(--global-border-color);
+}
+
+/* Theme Switcher Styles */
+.theme-switcher {
+  text-align: center;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.theme-switcher a {
+  display: inline-block;
+  padding: 2px 8px;
+  margin: 0 2px;
+  border-radius: 3px;
+  text-decoration: none;
+  color: #494e52;
+  transition: all 0.2s ease;
+}
+
+.theme-switcher a:hover {
+  background-color: #f2f3f3;
+  text-decoration: none;
+}
+
+.theme-switcher a.active {
+  background-color: #7a8288;
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .theme-switcher {
+    font-size: 12px;
+  }
+}
