@@ -7,7 +7,7 @@
 # server process.
 
 # Basic Site Settings
-locale                   : "zh-CN"
+locale                   : "en"
 site_theme               : "default"
 title                    : "Vicnent Lin <br> Finance Management <br>AI & Applications"
 title_separator          : "-"

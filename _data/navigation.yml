@@ -1,15 +1,17 @@
 main:
-  - title: "学术出版"
+  - title: "Publications"
     url: /publications/
-  - title: "学术报告"
+  - title: "Talks"
     url: /talks/    
-  - title: "教学"
+  - title: "Teaching"
     url: /teaching/    
-  - title: "项目"
+  - title: "Portfolio"
     url: /portfolio/
-  - title: "博客文章"
+  - title: "Blog Posts"
     url: /year-archive/
-  - title: "简历"
+  - title: "CV"
     url: /cv/
-  - title: "指南"
+  - title: "Guide"
     url: /markdown/
+  - title: "Bilingual Demo"
+    url: /bilingual-demo/

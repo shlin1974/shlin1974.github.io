@@ -19,7 +19,111 @@
 </div>
 {% endif %}
 
+<div class="theme-switcher">
+  <span>{{ site.data.ui-text[site.locale].theme_switch | default: "Theme:" }}</span>
+  <a href="javascript:void(0);" id="theme-toggle-light" class="theme-button">
+    <i class="fa-solid fa-sun" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].theme_light | default: "Light" }}
+  </a> | 
+  <a href="javascript:void(0);" id="theme-toggle-dark" class="theme-button">
+    <i class="fa-solid fa-moon" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].theme_dark | default: "Dark" }}
+  </a>
+</div>
+
+<script>
+function setLanguage(lang) {
+  // 标准化语言代码
+  var normalizedLang = lang;
+  if (lang === 'US-En') {
+    normalizedLang = 'en';
+  } else if (lang === 'zh') {
+    normalizedLang = 'zh-CN';
+  }
+  
+  // 设置cookie，保存用户的语言偏好
+  document.cookie = "preferred_language=" + normalizedLang + ";path=/;max-age=31536000";
+  
+  // 获取当前URL
+  var currentUrl = window.location.href;
+  var newUrl;
+  
+  // 检查URL是否已经有语言参数
+  if (currentUrl.indexOf('?lang=') > -1) {
+    // 替换现有的语言参数
+    newUrl = currentUrl.replace(/(\?|&)lang=[^&]*/, '$1lang=' + normalizedLang);
+  } else if (currentUrl.indexOf('?') > -1) {
+    // 添加语言参数到现有查询字符串
+    newUrl = currentUrl + '&lang=' + normalizedLang;
+  } else {
+    // 添加语言参数作为第一个查询参数
+    newUrl = currentUrl + '?lang=' + normalizedLang;
+  }
+  
+  // 重定向到新URL
+  window.location.href = newUrl;
+}
+
+// 页面加载时检查URL参数和cookie
+document.addEventListener('DOMContentLoaded', function() {
+  // 检查URL中是否有语言参数
+  var urlParams = new URLSearchParams(window.location.search);
+  var langParam = urlParams.get('lang');
+  
+  // 如果URL中有语言参数，设置为cookie
+  if (langParam) {
+    document.cookie = "preferred_language=" + langParam + ";path=/;max-age=31536000";
+  }
+  
+  // 如果URL中没有语言参数，检查cookie
+  var match = document.cookie.match(new RegExp('(^| )preferred_language=([^;]+)'));
+  var preferredLang = match ? match[2] : null;
+  
+  // 如果有cookie但URL中没有语言参数，重定向添加语言参数
+  if (preferredLang && !langParam) {
+    var currentUrl = window.location.href;
+    var newUrl;
+    
+    if (currentUrl.indexOf('?') > -1) {
+      newUrl = currentUrl + '&lang=' + preferredLang;
+    } else {
+      newUrl = currentUrl + '?lang=' + preferredLang;
+    }
+    
+    window.location.href = newUrl;
+  }
+  
+  // 添加主题切换功能
+  function setTheme(theme) {
+    const use_theme = theme || localStorage.getItem("theme") || $("html").attr("data-theme") || 
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+    if (use_theme === "dark") {
+      $("html").attr("data-theme", "dark");
+      $("#theme-toggle-dark").addClass("active");
+      $("#theme-toggle-light").removeClass("active");
+    } else {
+      $("html").removeAttr("data-theme");
+      $("#theme-toggle-light").addClass("active");
+      $("#theme-toggle-dark").removeClass("active");
+    }
+  }
+  
+  // 初始化主题
+  setTheme();
+  
+  // 主题切换事件
+  $("#theme-toggle-light").on('click', function() {
+    localStorage.setItem("theme", "light");
+    setTheme("light");
+  });
+  
+  $("#theme-toggle-dark").on('click', function() {
+    localStorage.setItem("theme", "dark");
+    setTheme("dark");
+  });
+});
+</script>
+
 <div class="page__footer-copyright">
   &copy; {{ site.time | date: '%Y' }} {{ site.name | default: site.title }}, {{ site.data.ui-text[site.locale].powered_by | default: "Powered by" }} <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a>, a fork of <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.<br />
-  Site last updated {{ "now" | date: '%Y-%m-%d' %}}
+  Site last updated {{ "now" | date: '%Y-%m-%d' }}
 </div>
